@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8070
   
 eureka:
   client:
@@ -17,15 +17,23 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: student-service
-          uri: lb://student-service
+        - id: simulate-service
+          uri: lb://simulate-service
           predicates:
-            - Path=/student/**
-        - id: book-service
-          uri: lb://book-service
+            - Path=/simulate/**
+        - id: register-service
+          uri: lb://register-service
           predicates:
-            - Path=/book/**
-        - id: pet-service
-          uri: lb://pet-service
+            - Path=/register/**
+        - id: requestCredit-service
+          uri: lb://requestCredit-service
           predicates:
-            - Path=/pet/**
+            - Path=/requestCredit/**
+        - id: evaluateCredit-service
+          uri: lb://evaluateCredit-service
+          predicates:
+            - Path=/evaluateCredit/**
+        - id: followCredit-service
+          uri: lb://followCredit-service
+          predicates:
+            - Path=/followCredit/**
