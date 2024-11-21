@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: register-service
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8092
+  datasource:
+    url: jdbc:postgresql://localhost:5432/PrestaBanco
+    username: postgres
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update

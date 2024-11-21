@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: evaluateCredit-service
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8094
+  datasource:
+    url: jdbc:postgresql://localhost:5432/PrestaBanco
+    username: postgres
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update
