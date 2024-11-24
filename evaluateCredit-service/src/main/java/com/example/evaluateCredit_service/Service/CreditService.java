@@ -3,7 +3,6 @@ package com.example.evaluateCredit_service.Service;
 import com.example.evaluateCredit_service.Entity.CreditEntity;
 import com.example.evaluateCredit_service.Entity.UserEntity;
 import com.example.evaluateCredit_service.Repository.CreditRepository;
-import com.example.evaluateCredit_service.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
