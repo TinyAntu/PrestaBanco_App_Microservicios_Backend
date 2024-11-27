@@ -1,5 +1,5 @@
 server:
-  port: 8070
+  port: 8080
   
 eureka:
   client:
@@ -36,4 +36,4 @@ spring:
         - id: followCredit-service
           uri: lb://followCredit-service
           predicates:
-            - Path=/followCredit/**
+            - Path=/followCredit-/**

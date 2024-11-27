@@ -4,11 +4,12 @@ spring:
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8093
+      uri: http://localhost:8081
   datasource:
     url: jdbc:postgresql://localhost:5432/PrestaBanco
     username: postgres
     password: admin
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+    show-sql: true

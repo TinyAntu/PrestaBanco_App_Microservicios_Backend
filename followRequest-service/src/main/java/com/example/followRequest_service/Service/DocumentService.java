@@ -2,10 +2,11 @@ package com.example.followRequest_service.Service;
 
 import com.example.followRequest_service.Entity.DocumentEntity;
 import com.example.followRequest_service.Repository.DocumentRepository;
-import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
