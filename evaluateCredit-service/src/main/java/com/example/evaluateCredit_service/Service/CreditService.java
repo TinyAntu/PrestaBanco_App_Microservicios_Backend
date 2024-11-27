@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -98,8 +99,16 @@ public class CreditService {
         return user_age + Credit.getYears() < 70;
     }
 
-    public List<CreditEntity> getCredits(Long id){
-        return creditRepository.findByUserId(id);
+    public List<CreditEntity> getCredits(){
+        return creditRepository.findAll();
+    }
+
+    public CreditEntity updateCredit(Long id, CreditEntity credit) {
+        if (!creditRepository.existsById(id)) {
+            throw new EntityNotFoundException("Credit not found with ID: " + id);
+        }
+        credit.setIdCredit(id);
+        return creditRepository.save(credit);
     }
 
     public Integer financing(Integer value, Integer amount ){

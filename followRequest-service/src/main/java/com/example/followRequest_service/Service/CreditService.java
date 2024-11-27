@@ -45,4 +45,10 @@ public class CreditService {
             default -> false; // Invalid credit type
         };
     }
+
+    public List<CreditEntity> getCredits(Long id){
+        return creditRepository.findByUserId(id);
+    }
+
+
 }

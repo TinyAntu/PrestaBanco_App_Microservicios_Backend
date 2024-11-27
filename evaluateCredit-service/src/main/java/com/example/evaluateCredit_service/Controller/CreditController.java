@@ -15,11 +15,13 @@ public class CreditController {
     CreditService creditService;
 
 
-    @GetMapping("/creditlist/{id}")
-    public ResponseEntity<List<CreditEntity>> listCredit(@PathVariable Long id){
-        List<CreditEntity> credits = creditService.getCredits(id);
-        return ResponseEntity.ok(credits);
+    @GetMapping("/getAll")
+    public  ResponseEntity<List<CreditEntity>> getAllCredits(){
+        List<CreditEntity> Credits = creditService.getCredits();
+        return ResponseEntity.ok(Credits);
     }
+
+
 
     @GetMapping("/R1/{id}")
     public ResponseEntity<Boolean> Step1(@PathVariable Long id){
@@ -49,5 +51,11 @@ public class CreditController {
     public ResponseEntity<Long> TotalCost( @PathVariable Long id){
         Long Total = creditService.total_cost(id);
         return  ResponseEntity.ok(Total);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CreditEntity> updateCredite( @PathVariable Long id,@RequestBody CreditEntity Credit){
+        CreditEntity uptodatecredit = creditService.updateCredit(id, Credit);
+        return  ResponseEntity.ok(uptodatecredit);
     }
 }
