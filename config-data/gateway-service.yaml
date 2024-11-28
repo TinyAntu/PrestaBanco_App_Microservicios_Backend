@@ -13,21 +13,7 @@ eureka:
 spring:
   cloud:
     gateway:
-      globalcors:
-        corsConfigurations:
-          '[/**]':  # Aplica a todas las rutas del Gateway
-            allowedOrigins:
-              - "http://localhost:5173" # Reemplaza con la URL del frontend
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS  # Necesario para preflight requests
-            allowedHeaders:
-              - "*"  # Permitir todos los encabezados
-            allowCredentials: true  # Permitir envío de cookies o tokens
-            maxAge: 3600  # Cacheo de la configuración CORS
+      
 
       discovery:
         locator:
