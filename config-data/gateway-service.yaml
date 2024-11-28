@@ -37,3 +37,17 @@ spring:
           uri: lb://followCredit-service
           predicates:
             - Path=/api/follow/**, /api/docs/**
+      globalcors:
+        corsConfigurations:
+          '[/**]': # Aplica a todas las rutas
+            allowedOrigins: "*" # Permitir cualquier origen
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+            maxAge: 3600
