@@ -13,8 +13,6 @@ eureka:
 spring:
   cloud:
     gateway:
-      
-
       discovery:
         locator:
           enabled: true
@@ -26,7 +24,7 @@ spring:
         - id: register-service
           uri: lb://register-service
           predicates:
-            - Path=/register/**
+            - Path=/api/register/**
         - id: requestCredit-service
           uri: lb://requestCredit-service
           predicates:
