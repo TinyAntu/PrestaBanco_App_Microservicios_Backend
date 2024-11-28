@@ -20,7 +20,7 @@ spring:
         - id: simulate-service
           uri: lb://simulate-service
           predicates:
-            - Path=/simulate/**
+            - Path=/api/simulate/**
         - id: register-service
           uri: lb://register-service
           predicates:
@@ -28,12 +28,12 @@ spring:
         - id: requestCredit-service
           uri: lb://requestCredit-service
           predicates:
-            - Path=/requestCredit/**
+            - Path=/api/request/**
         - id: evaluateCredit-service
           uri: lb://evaluateCredit-service
           predicates:
-            - Path=/evaluateCredit/**
+            - Path=/api/evaluate/**
         - id: followCredit-service
           uri: lb://followCredit-service
           predicates:
-            - Path=/followCredit/**
+            - Path=/api/follow/**, /api/docs/**
