@@ -1,6 +1,6 @@
 server:
   port: 8080
-  
+
 eureka:
   client:
     fetch-registry: true
@@ -9,20 +9,6 @@ eureka:
       default-zone: http://localhost:8761/eureka
   instance:
     hostname: localhost
-  
-globalcors:
-  corsConfigurations:
-    '[/**]':
-      allowedOrigins: "*"
-      allowedMethods:
-        - GET
-        - POST
-        - PUT
-        - DELETE
-      allowedHeaders:
-        - "*"
-      allowCredentials: true
-      maxAge: 3600
 
 spring:
   cloud:
@@ -50,4 +36,18 @@ spring:
         - id: followCredit-service
           uri: lb://followCredit-service
           predicates:
-            - Path=/followCredit-/**
+            - Path=/followCredit/**
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':  # Aplica a todas las rutas
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+            maxAge: 3600
