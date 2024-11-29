@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/simulate")
-@CrossOrigin("*")
+//CrossOrigin("*")
 public class SimulateController {
     @Autowired
     SimulateService simulateService;

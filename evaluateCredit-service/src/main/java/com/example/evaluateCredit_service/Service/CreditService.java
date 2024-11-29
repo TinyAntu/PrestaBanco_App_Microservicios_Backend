@@ -112,6 +112,7 @@ public class CreditService {
     }
 
     public Integer financing(Integer value, Integer amount ){
-        return  (int) ((amount / (double) value) * 100);
+        System.out.print((int) ((value / (double) amount) * 100));
+        return  (int) ((value / (double) amount) * 100);
     }
 }

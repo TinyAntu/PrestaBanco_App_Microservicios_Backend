@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/docs")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class DocumentController {
 
     @Autowired
