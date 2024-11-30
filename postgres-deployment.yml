@@ -33,11 +33,6 @@ spec:
       - image: postgres:latest
         name: postgres
         env:
-        - name: POSTGRES_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-root-credentials
-              key: password
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
@@ -48,7 +43,7 @@ spec:
             secretKeyRef:
               name: postgres-user-credentials
               key: password
-        - name: POSTGRES_DATABASE
+        - name: POSTGRES_DB
           valueFrom:
             configMapKeyRef:
               name: postgres-db
@@ -58,7 +53,7 @@ spec:
           name: postgres
         volumeMounts:
         - name: postgres-persistent-storage
-          mountPath: /var/lib/postgres
+          mountPath: /var/lib/postgresql/data
       volumes:
       - name: postgres-persistent-storage
         persistentVolumeClaim:
@@ -76,4 +71,17 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Mi
+      storage: 2Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 2Gi
+  hostPath:
+    path: /data/postgres
+  storageClassName: standard
