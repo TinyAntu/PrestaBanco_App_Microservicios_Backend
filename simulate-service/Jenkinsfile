@@ -7,7 +7,7 @@ pipeline {
         stage('Build maven') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/TinyAntu/PrestaBanco_App_Microservicios_Backend.git']])
-                dir('simulate-service') {  // Cambia a la carpeta correcta
+                dir('simulate-service') {  // Cambia a la carpeta del microservicio
                     bat 'mvn clean package'
                 }
             }
@@ -16,7 +16,7 @@ pipeline {
         stage('Build docker image') {
             steps {
                 script {
-                    bat 'docker build -t tinyantu/simulate-service:latest -f Dockerfile .'
+                    bat 'docker build -t tinyantu/simulate-service:latest -f simulate-service/Dockerfile simulate-service'
                 }
             }
         }
@@ -33,5 +33,6 @@ pipeline {
         }
     }
 }
+
 
 
