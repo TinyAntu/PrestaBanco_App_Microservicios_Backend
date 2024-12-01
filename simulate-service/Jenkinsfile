@@ -1,20 +1,22 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven' // Define tu Maven Tool
+        maven 'Maven'
     }
     stages {
         stage('Build maven') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/TinyAntu/PrestaBanco_App_Microservicios_Backend.git']])
-                bat 'mvn clean package'
+                dir('simulate-service') {  // Cambia a la carpeta correcta
+                    bat 'mvn clean package'
+                }
             }
         }  
 
         stage('Build docker image') {
             steps {
                 script {
-                    bat 'docker build -t tinyantu/simulate-service:latest -f Dockerfile .' // Agrega "." como contexto.
+                    bat 'docker build -t tinyantu/simulate-service:latest -f Dockerfile .'
                 }
             }
         }
@@ -23,12 +25,13 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'dckhubpassword', variable: 'dhpsw')]) {
-                        bat 'docker login -u tinyantu -p %dhpsw%' // Inicio de sesión en DockerHub
+                        bat 'docker login -u tinyantu -p %dhpsw%'
                     }
-                    bat 'docker push tinyantu/simulate-service:latest' 
+                    bat 'docker push tinyantu/simulate-service:latest'
                 }
             }
         }
     }
 }
+
 
