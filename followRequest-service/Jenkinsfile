@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+    }
+    stages {
+        stage('Build maven') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/TinyAntu/PrestaBanco_App_Microservicios_Backend.git']])
+                dir('followRequest-service') {  // Cambia a la carpeta del microservicio
+                    bat 'mvn clean package'
+                }
+            }
+        }  
+
+        stage('Build docker image') {
+            steps {
+                script {
+                    bat 'docker build -t tinyantu/followrequest-service:latest -f followRequest-service/Dockerfile followRequest-service'
+                }
+            }
+        }
+
+        stage('Push image to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'dckhubpassword', variable: 'dhpsw')]) {
+                        bat 'docker login -u tinyantu -p %dhpsw%'
+                    }
+                    bat 'docker push tinyantu/followrequest-service:latest'
+                }
+            }
+        }
+    }
+}
+
+
+
