@@ -24,4 +24,10 @@ public class UserController {
         return userService.authenticateUser(user.getRut(), user.getPassword());
     }
 
+    @GetMapping("/user")
+    public ResponseEntity<UserEntity> getUser(Long id){
+        UserEntity user = userService.findUserById(id);
+        return ResponseEntity.ok(user);
+    }
+
 }

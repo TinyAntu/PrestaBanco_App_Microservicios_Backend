@@ -8,19 +8,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class CreditService {
     @Autowired
     CreditRepository creditRepository;
-    @Autowired
-    UserService userService;
+
     @Autowired
     RestTemplate restTemplate;
 
     public Long total_cost(Long id){
-        CreditEntity Credit = creditRepository.findByIdCredit(id);
+        CreditEntity Credit = restTemplate.getForObject("http://requestCredit-service/api/request/getCredit/{id}", CreditEntity.class, id);
         Integer FireHazardSecure = 20000;
         Long Montly_share = restTemplate.getForObject(
                 "http://simulate-service/api/simulate/simulation?capital="
@@ -45,7 +48,7 @@ public class CreditService {
     }
 
     public Boolean R1(Long id){
-        CreditEntity Credit = creditRepository.findByIdCredit(id);
+        CreditEntity Credit = restTemplate.getForObject("http://requestCredit-service/api/request/getCredit/{id}", CreditEntity.class, id);
         Long Share = restTemplate.getForObject(
                 "http://simulate-service/api/simulate/simulation?capital="
                         + Credit.getCapital()
@@ -59,7 +62,7 @@ public class CreditService {
     }
 
     public Boolean R4(Long id){
-        CreditEntity Credit = creditRepository.findByIdCredit(id);
+        CreditEntity Credit = restTemplate.getForObject("http://requestCredit-service/api/request/getCredit/{id}", CreditEntity.class, id);
         Integer Debt = Credit.getDebt();
         Integer Income = Credit.getIncome();
         Long Share = restTemplate.getForObject(
@@ -74,8 +77,13 @@ public class CreditService {
         return Income * 0.5 >= Debt + Share;
     }
 
+    public List<CreditEntity> getAllCredits(){
+        List<CreditEntity> credits = restTemplate.getForObject("http://requestCredit-service/api/request/getAll", List.class);
+        return credits;
+    }
+
     public Boolean R5(Long id){
-        CreditEntity Credit = creditRepository.findByIdCredit(id);
+        CreditEntity Credit = restTemplate.getForObject("http://requestCredit-service/api/request/getCredit/{id}", CreditEntity.class, id);
         Integer Credit_type = Credit.getType();
         Integer Financing = financing(Credit.getProperty_value(), Credit.getCapital());
         return switch (Credit_type) {
@@ -92,15 +100,22 @@ public class CreditService {
     }
 
     public Boolean R6(Long id){
-        CreditEntity Credit = creditRepository.findByIdCredit(id);
-        UserEntity user = userService.findUserById(Credit.getUserId());
-        Integer user_age = userService.AgeInYears(user.getBirthdate());
+        CreditEntity Credit = restTemplate.getForObject("http://requestCredit-service/api/request/getCredit/{id}", CreditEntity.class, id);
+        UserEntity user = restTemplate.getForObject("http://register-service/api/register/user" + Credit.getUserId(), UserEntity.class);
+        Integer user_age = AgeInYears(user.getBirthdate());
 
         return user_age + Credit.getYears() < 70;
     }
 
-    public List<CreditEntity> getCredits(){
-        return creditRepository.findAll();
+    public int AgeInYears(Date birthdate) {
+        LocalDate Local_birthdate;
+        if (birthdate instanceof java.sql.Date) {
+            Local_birthdate = ((java.sql.Date) birthdate).toLocalDate();
+        } else {
+            Local_birthdate = birthdate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        LocalDate Actual_date = LocalDate.now();
+        return Period.between(Local_birthdate, Actual_date).getYears();
     }
 
     public CreditEntity updateCredit(Long id, CreditEntity credit) {
@@ -111,8 +126,7 @@ public class CreditService {
         return creditRepository.save(credit);
     }
 
-    public Integer financing(Integer value, Integer amount ){
-        System.out.print((int) ((value / (double) amount) * 100));
-        return  (int) ((value / (double) amount) * 100);
+    public Integer financing(Integer value, Integer capital ){
+        return  (int) ((capital / (double) value) * 100);
     }
 }

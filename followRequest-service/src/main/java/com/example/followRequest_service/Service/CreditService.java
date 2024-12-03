@@ -5,6 +5,8 @@ import com.example.followRequest_service.Repository.CreditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.followRequest_service.Entity.DocumentEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.List;
 
 @Service
@@ -13,9 +15,11 @@ public class CreditService {
     CreditRepository creditRepository;
     @Autowired
     DocumentService documentService;
+    @Autowired
+    RestTemplate restTemplate;
 
     public Boolean E1(Long id) {
-        CreditEntity Credit = creditRepository.findByIdCredit(id);
+        CreditEntity Credit = restTemplate.getForObject("http://requestCredit-service/api/request/getCredit/{id}", CreditEntity.class, id);
         Integer type_credit = Credit.getType();
         List<DocumentEntity> Docs = documentService.getDocuments(id);
 
@@ -47,7 +51,8 @@ public class CreditService {
     }
 
     public List<CreditEntity> getCredits(Long id){
-        return creditRepository.findByUserId(id);
+        List<CreditEntity> credits = restTemplate.getForObject("http://requestCredit-service/api/request/creditlist/{id}", List.class, id);
+        return credits;
     }
 
 

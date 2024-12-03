@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CreditService {
     @Autowired
@@ -27,4 +29,17 @@ public class CreditService {
         credit.setE(1);
         return creditRepository.save(credit);
     }
+
+    public List<CreditEntity> getCredits(){
+        return creditRepository.findAll();
+    }
+
+    public List<CreditEntity> getCredits(Long id){
+        return creditRepository.findByUserId(id);
+    }
+
+    public CreditEntity getCreditById(Long id){
+        return  creditRepository.findByIdCredit(id);
+    }
+
 }

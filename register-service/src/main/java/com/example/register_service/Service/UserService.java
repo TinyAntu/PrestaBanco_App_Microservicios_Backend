@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -34,5 +35,10 @@ public class UserService {
             System.out.println("User not found for Rut: " + Rut);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         }
+    }
+
+    public UserEntity findUserById(Long Id){
+        return userRepository.findById(Id)
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
     }
 }

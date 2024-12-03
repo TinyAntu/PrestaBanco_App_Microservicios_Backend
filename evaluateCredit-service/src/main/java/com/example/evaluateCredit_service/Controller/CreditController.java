@@ -14,14 +14,11 @@ public class CreditController {
     @Autowired
     CreditService creditService;
 
-
     @GetMapping("/getAll")
     public  ResponseEntity<List<CreditEntity>> getAllCredits(){
-        List<CreditEntity> Credits = creditService.getCredits();
+        List<CreditEntity> Credits = creditService.getAllCredits();
         return ResponseEntity.ok(Credits);
     }
-
-
 
     @GetMapping("/R1/{id}")
     public ResponseEntity<Boolean> Step1(@PathVariable Long id){
@@ -54,7 +51,7 @@ public class CreditController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<CreditEntity> updateCredite( @PathVariable Long id,@RequestBody CreditEntity Credit){
+    public ResponseEntity<CreditEntity> updateCredit( @PathVariable Long id,@RequestBody CreditEntity Credit){
         CreditEntity uptodatecredit = creditService.updateCredit(id, Credit);
         return  ResponseEntity.ok(uptodatecredit);
     }

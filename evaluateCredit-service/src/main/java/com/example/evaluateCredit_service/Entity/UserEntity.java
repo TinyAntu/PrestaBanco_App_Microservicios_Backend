@@ -1,6 +1,7 @@
 package com.example.evaluateCredit_service.Entity;
 
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,10 +14,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-
 public class UserEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
@@ -30,6 +28,4 @@ public class UserEntity {
     private Integer role;
     @Temporal(TemporalType.DATE)
     private Date birthdate;
-
-
 }
