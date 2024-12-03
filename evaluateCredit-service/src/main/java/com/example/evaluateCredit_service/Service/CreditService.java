@@ -118,14 +118,6 @@ public class CreditService {
         return Period.between(Local_birthdate, Actual_date).getYears();
     }
 
-    public CreditEntity updateCredit(Long id, CreditEntity credit) {
-        if (!creditRepository.existsById(id)) {
-            throw new EntityNotFoundException("Credit not found with ID: " + id);
-        }
-        credit.setIdCredit(id);
-        return creditRepository.save(credit);
-    }
-
     public Integer financing(Integer value, Integer capital ){
         return  (int) ((capital / (double) value) * 100);
     }

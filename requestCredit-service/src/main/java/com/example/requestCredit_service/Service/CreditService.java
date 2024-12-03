@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -40,6 +41,14 @@ public class CreditService {
 
     public CreditEntity getCreditById(Long id){
         return  creditRepository.findByIdCredit(id);
+    }
+
+    public CreditEntity updateCredit(Long id, CreditEntity credit) {
+        if (!creditRepository.existsById(id)) {
+            throw new EntityNotFoundException("Credit not found with ID: " + id);
+        }
+        credit.setIdCredit(id);
+        return creditRepository.save(credit);
     }
 
 }

@@ -50,9 +50,4 @@ public class CreditController {
         return  ResponseEntity.ok(Total);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<CreditEntity> updateCredit( @PathVariable Long id,@RequestBody CreditEntity Credit){
-        CreditEntity uptodatecredit = creditService.updateCredit(id, Credit);
-        return  ResponseEntity.ok(uptodatecredit);
-    }
 }
