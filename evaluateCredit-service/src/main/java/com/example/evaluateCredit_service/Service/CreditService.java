@@ -101,7 +101,7 @@ public class CreditService {
 
     public Boolean R6(Long id){
         CreditEntity Credit = restTemplate.getForObject("http://requestCredit-service/api/request/getCredit/{id}", CreditEntity.class, id);
-        UserEntity user = restTemplate.getForObject("http://register-service/api/register/user" + Credit.getUserId(), UserEntity.class);
+        UserEntity user = restTemplate.getForObject("http://register-service/api/register/user/{id}", UserEntity.class , Credit.getUserId());
         Integer user_age = AgeInYears(user.getBirthdate());
 
         return user_age + Credit.getYears() < 70;

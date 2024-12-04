@@ -71,7 +71,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 20Mi
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -81,7 +81,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   capacity:
-    storage: 2Gi
+    storage: 20Mi
   hostPath:
     path: /data/postgres
   storageClassName: standard
