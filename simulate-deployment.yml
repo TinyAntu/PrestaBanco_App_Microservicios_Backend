@@ -3,17 +3,26 @@ kind: Deployment
 metadata:
   name: simulate-deployment
   labels:
-    app: simulate-deployment
+    app: simulate-service
 spec:
+  selector:
+    matchLabels:
+      app: simulate-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: simulate-service
+    spec:
       containers:
-        - name: simulate-service-cont
+        - name: simulate-service-postgres
           image: tinyantu/simulate-service:latest
           ports:
             - containerPort: 8081
           env:
-            - name: SPRING_CLOUD_CONFIG_URI
+            - name: SPRING_CLOUD_CONFIG_URI # Nombre de la variable de entorno
               value: http://config-service:8081
-            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE # Nombre de la variable de entorno
               value: http://eureka-service:8761
             - name: eureka.instance.preferIpAddress
               value: "true"
@@ -22,10 +31,10 @@ spec:
                 configMapKeyRef:
                   name: postgres-configmap # Nombre del configmap
                   key: POSTGRES_DB_HOST # Nombre de la clave del configmap
-            - name: POSTGRES_DB_Simulate # Nombre de la variable de entorno
+            - name: POSTGRES_DB_Simulate # Nombre de la variable de entorno en configmap
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-configmap
+                  name: postgres-configmap # Nombre del configmap
                   key: POSTGRES_DB_Simulate # Nombre de la clave del configmap
             - name: DB_USERNAME # Nombre de la variable de entorno
               valueFrom:
@@ -46,7 +55,7 @@ metadata:
     app: simulate-service
 spec:
   selector:
-    app: simulate-deployment
+    app: simulate-service
   ports:
     - protocol: TCP
       port: 8086
