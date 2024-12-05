@@ -1,38 +1,54 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: simulate-service
+  name: simulate-deployment
   labels:
-    app: simulate-service
+    app: simulate-deployment
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: simulate-service
-  template:
-    metadata:
-      labels:
-        app: simulate-service
-    spec:
       containers:
-      - name: simulate-service
-        image: tinyantu/simulate-service:latest
-        ports:
-        - containerPort: 8080  # Puerto interno del contenedor (opcional)
-        env:
-        - name: SERVER_PORT
-          value: "0"  # Puerto aleatorio
-        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-          value: "http://eureka-service:8761/eureka"
+        - name: simulate-service-cont
+          image: tinyantu/simulate-service:latest
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://config-service:8081
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://eureka-service:8761
+            - name: eureka.instance.preferIpAddress
+              value: "true"
+            - name: DB_HOST # Nombre de la variable de entorno
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap # Nombre del configmap
+                  key: POSTGRES_DB_HOST # Nombre de la clave del configmap
+            - name: POSTGRES_DB_Simulate # Nombre de la variable de entorno
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configmap
+                  key: POSTGRES_DB_Simulate # Nombre de la clave del configmap
+            - name: DB_USERNAME # Nombre de la variable de entorno
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-user-secret
+                  key: username # Nombre de la clave del secret
+            - name: DB_PASSWORD # Nombre de la variable de entorno
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-user-secret
+                  key: password # Nombre de la clave del secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: simulate-service
+  labels:
+    app: simulate-service
 spec:
   selector:
-    app: simulate-service
+    app: simulate-deployment
   ports:
-  - port: 80  # Puerto expuesto dentro del cluster
-    targetPort: 8080
-  type: ClusterIP
+    - protocol: TCP
+      port: 8086
+      targetPort: 8086
+  type: LoadBalancer
