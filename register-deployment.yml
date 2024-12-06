@@ -39,12 +39,12 @@ spec:
             - name: DB_USERNAME # Nombre de la variable de entorno
               valueFrom:
                 secretKeyRef:
-                  name: postgres-user-secret
+                  name: postgres-user-credentials
                   key: username # Nombre de la clave del secret
             - name: DB_PASSWORD # Nombre de la variable de entorno
               valueFrom:
                 secretKeyRef:
-                  name: postgres-user-secret
+                  name: postgres-user-credentials
                   key: password # Nombre de la clave del secret
 ---
 apiVersion: v1
