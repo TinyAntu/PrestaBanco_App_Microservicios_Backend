@@ -13,8 +13,8 @@ spring:
       uri: http://localhost:8081
   datasource:
     url: jdbc:postgresql://${DB_HOST}:5432/${POSTGRES_DB_Follow}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update

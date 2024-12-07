@@ -1,0 +1,94 @@
+1.- minikube start --driver=virtualbox --no-vtx-check
+
+Comandos de uso Relevante
+	Ip de los servicios
+		kubectl get svc
+	Pods existentes
+		kubectl get pods -o wide
+	Gets
+		kubectl get deployments
+		kubectl get services
+		kubectl get pods -o wide
+		kubectl get nodes -o wide
+
+		kubectl get secret
+		kubectl get configmap
+		kubectl get pvc
+		minikube ip
+		minkube status
+
+		kubectl get configmap
+		kubectl get secrets
+		
+		kubectl describe pod "deployment"
+
+Depliegue
+
+1.-Postgres
+	kubectl apply -f postgres-configmap.yml
+	kubectl apply -f postgres-user-secret.yml
+	kubectl apply -f postgres-deployment.yml
+
+1.1-Creacion de DB
+	kubectl exec -it "nombre del pod" -- psql -U postgres
+
+	CREATE DATABASE Simulate;
+	CREATE DATABASE Register;
+	CREATE DATABASE Request;
+	CREATE DATABASE Evaluate;
+	CREATE DATABASE Follow;
+	exit
+2.-Microservicios base
+	kubectl apply -f config-deployment.yml
+	kubectl apply -f eureka-deployment.yml
+	kubectl apply -f gateway-deployment.yml
+3.- Microservicios
+	kubectl apply -f simulate-deployment.yml
+	kubectl apply -f register-deployment.yml
+	kubectl apply -f request-deployment.yml
+	kubectl apply -f evaluate-deployment.yml
+	kubectl apply -f follow-deployment.yml
+4.- Front end
+	kubectl apply -f frontend-deployment.yml	
+	kubectl apply -f frontend-service.yml
+
+5.- ABRIR 2 CMD MAS EN LA MISMA DIRECCION
+	FRONT END
+	Para acceder al front es la ip de minikube:5173
+	kubectl port-forward frontend-deployment-"numero" 5173:5173
+	GATE WAY
+	kubectl port-forward gateway-deployment-"numero" 8080:8080
+
+6.-Deletes
+
+Postgres
+	kubectl delete deployment postgres
+	kubectl delete service postgres
+	kubectl delete configmap postgres
+	kubectl delete secret postgres-user-credentials
+	Opcional
+	kubectl delete pvc postgresql-pv-claim
+MicroServicios
+	kubectl delete deployment simulate-deployment
+	kubectl delete service simulate-service
+	kubectl delete deployment register-deployment
+	kubectl delete service register-service
+	kubectl delete deployment request-deployment
+	kubectl delete service request-service
+	kubectl delete deployment evaluate-deployment
+	kubectl delete service evaluate-service
+	kubectl delete deployment follow-deployment
+	kubectl delete service follow-service
+FrontEnd
+	kubectl delete deployment frontend-deployment
+	kubectl delete service frontend-service
+	
+	
+
+
+
+
+
+
+
+

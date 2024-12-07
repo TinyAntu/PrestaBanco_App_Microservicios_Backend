@@ -7,7 +7,7 @@ metadata:
 data:
   POSTGRES_DB_HOST: postgres
   #base de Simulate
-  POSTGRES_DB_Simulate: Simulate
+  POSTGRES_DB_Simulate: simulate
   #base de Register
   POSTGRES_DB_Register: Register
   #base de Request
