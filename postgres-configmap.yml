@@ -9,10 +9,10 @@ data:
   #base de Simulate
   POSTGRES_DB_Simulate: simulate
   #base de Register
-  POSTGRES_DB_Register: Register
+  POSTGRES_DB_Register: register
   #base de Request
-  POSTGRES_DB_Request: Request
+  POSTGRES_DB_Request: request
   #base de Evaluate
-  POSTGRES_DB_Evaluate: Evaluate
+  POSTGRES_DB_Evaluate: evaluate
   #base de Follow
-  POSTGRES_DB_Follow: Follow
+  POSTGRES_DB_Follow: follow
