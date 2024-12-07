@@ -34,17 +34,12 @@ spec:
         name: postgres
         imagePullPolicy: "IfNotPresent"
         env:
-        - name: DB_USERNAME # Nombre de la variable de entorno
+        - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-user-credentials
-              key: username
-        - name: DB_PASSWORD # Nombre de la variable de entorno
-          valueFrom:
-            secretKeyRef:
-              name: postgres-user-credentials
-              key: password
-        - name: POSTGRES_DB_Simulate # Nombre de la variable de entorno en configmap
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB_Simulate
           valueFrom:
             configMapKeyRef:
               name: postgres-configmap

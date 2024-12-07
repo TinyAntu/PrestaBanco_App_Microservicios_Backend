@@ -36,12 +36,12 @@ spec:
                 configMapKeyRef:
                   name: postgres-configmap # Nombre del configmap
                   key: POSTGRES_DB_Simulate # Nombre de la clave del configmap
-            - name: DB_USERNAME # Nombre de la variable de entorno
+            - name: POSTGRES_USER # Nombre de la variable de entorno
               valueFrom:
                 secretKeyRef:
                   name: postgres-user-credentials # Nombre del secret asignado dentro del archivo postgres-user-secret.yml
                   key: username # Nombre de la clave del secret
-            - name: DB_PASSWORD # Nombre de la variable de entorno
+            - name: POSTGRES_PASSWORD # Nombre de la variable de entorno
               valueFrom:
                 secretKeyRef:
                   name: postgres-user-credentials
