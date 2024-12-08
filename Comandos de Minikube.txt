@@ -85,8 +85,8 @@ MicroServicios
 	kubectl delete service register-service
 	kubectl delete deployment request-deployment
 	kubectl delete service request-service
-	kubectl delete deployment evaluate-deployment
-	kubectl delete service evaluate-service
+	kubectl delete deployment evaluatecredit-deployment
+	kubectl delete service evaluatecredit-service
 	kubectl delete deployment follow-deployment
 	kubectl delete service follow-service
 FrontEnd
