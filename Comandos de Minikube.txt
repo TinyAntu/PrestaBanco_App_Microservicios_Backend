@@ -68,6 +68,16 @@ Postgres
 	kubectl delete secret postgres-user-credentials
 	Opcional
 	kubectl delete pvc postgresql-pv-claim
+
+Micros Base
+	kubectl delete deployment config-deployment
+    	kubectl delete service config-service
+
+    	kubectl delete deployment eureka-deployment
+    	kubectl delete service eureka-service
+
+    	kubectl delete deployment gateway-deployment
+    	kubectl delete service gateway-service
 MicroServicios
 	kubectl delete deployment simulate-deployment
 	kubectl delete service simulate-service
